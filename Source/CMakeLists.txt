@@ -34,7 +34,7 @@ include(GNUInstallDirs)
 find_package(Lua)
 if(NOT Lua_FOUND)
 	find_package(PkgConfig REQUIRED)
-	pkg_check_modules(LUA REQUIRED IMPORTED_TARGET lua)
+	pkg_check_modules(LUA REQUIRED lua)
 endif()
 
 include_directories(example_HelloLua PRIVATE ${LUA_INCLUDE_DIR})
