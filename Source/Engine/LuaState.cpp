@@ -34,7 +34,11 @@ LuaState::LuaState() {
 
 LuaState::LuaState(StateParams params) {
    shared = false;
+#if LUA_VERSION_NUM >= 505
    L = lua_newstate(params.allocator, params.userData, luaL_makeseed(nullptr));
+#else
+   L = lua_newstate(params.allocator, params.userData);
+#endif
 }
 
 LuaState::~LuaState() {
