@@ -34,7 +34,7 @@ LuaState::LuaState() {
 
 LuaState::LuaState(StateParams params) {
    shared = false;
-   L = lua_newstate(params.allocator, params.userData);
+   L = lua_newstate(params.allocator, params.userData, luaL_makeseed(nullptr));
 }
 
 LuaState::~LuaState() {
