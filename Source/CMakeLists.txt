@@ -31,19 +31,16 @@ set(SOURCE_FILES
 
 include(GNUInstallDirs)
 
-find_package(Lua)
-if(NOT Lua_FOUND)
-	find_package(PkgConfig REQUIRED)
-	pkg_check_modules(LUA REQUIRED lua)
-endif()
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(LUA REQUIRED lua)
 
-include_directories(example_HelloLua PRIVATE ${LUA_INCLUDE_DIR})
+include_directories(${LUA_INCLUDE_DIRS})
 
 add_library(luacpp SHARED ${SOURCE_FILES})
 add_library(luacpp_static STATIC ${SOURCE_FILES})
 set_target_properties(luacpp_static PROPERTIES OUTPUT_NAME luacpp)
-target_link_libraries(luacpp ${LUA_LIBRARIES})
-target_link_libraries(luacpp_static ${LUA_LIBRARIES})
+target_link_libraries(luacpp ${LUA_LDFLAGS})
+target_link_libraries(luacpp_static ${LUA_LDFLAGS})
 
 ##########
 # Examples
@@ -364,7 +361,7 @@ if(LUACPP_BUILD_MODULES)
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
     )
 
-    target_link_libraries(luacpp_module PUBLIC ${LUA_LIBRARIES})
+    target_link_libraries(luacpp_module PUBLIC ${LUA_LDFLAGS})
 
     add_library(LuaCpp::module ALIAS luacpp_module)
 
