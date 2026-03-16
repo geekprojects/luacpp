@@ -31,7 +31,11 @@ set(SOURCE_FILES
 
 include(GNUInstallDirs)
 
-find_package(Lua REQUIRED)
+find_package(Lua)
+if(NOT Lua_FOUND)
+	find_package(PkgConfig REQUIRED)
+	pkg_check_modules(LUA REQUIRED IMPORTED_TARGET lua)
+endif()
 
 include_directories(example_HelloLua PRIVATE ${LUA_INCLUDE_DIR})
 
